@@ -2,7 +2,16 @@ const canvas=document.getElementById('canvas')
 const ctx=canvas.getContext('2d')
 
 let size=10
-let color = 'black'
+let color = "black"
+
+//get the color 
+var theInput = document.getElementById("color");
+
+theInput.addEventListener("input", function(){
+  var inputColor = theInput.value;
+  color=inputColor
+} );
+
 let isPressed=false
 let mouseX=undefined
 let mouseY=undefined
@@ -54,4 +63,30 @@ function drawLine(x1,y1,x2,y2){
     ctx.stroke();
 }
 
+
+//Button functions 
+
+function decSize(){
+    let currSize=document.getElementById("size").innerHTML;
+    if (currSize>5)
+        currSize-=5
+
+    document.getElementById("size").innerHTML=currSize    
+    size=currSize
+}
+
+
+function incSize(){
+    let currSize=document.getElementById("size").innerHTML;
+    c=parseInt(currSize)
+    if (c<50)
+        c+=5
+    document.getElementById("size").innerHTML=c    
+    size=c
+    
+}
+
+function clearScreen(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
 
