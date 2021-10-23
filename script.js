@@ -3,6 +3,7 @@ const ctx=canvas.getContext('2d')
 
 let size=10
 let color = "black"
+let flowerPressed=false
 
 //get the color 
 var theInput = document.getElementById("color");
@@ -37,14 +38,16 @@ canvas.addEventListener('mousemove', (event)=>{
         let x2=event.offsetX
         let y2=event.offsetY
 
-        drawCircle(x2,y2)
-        drawLine(mouseX,mouseY,x2,y2)
+        if(!flowerPressed){
+            drawCircle(x2,y2)
+            drawLine(mouseX,mouseY,x2,y2)
+        }
+      
 
         mouseX=x2
         mouseY=y2
     }
 })
-
 
 function drawCircle(x,y){
 
@@ -90,3 +93,13 @@ function clearScreen(){
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+function flowers(){
+    if (!flowerPressed){
+        flowerPressed=true
+        document.getElementById("flowers").style.background="lightgrey"
+    }else{
+        flowerPressed=false
+        document.getElementById("flowers").style.background="white"
+    }
+
+}
