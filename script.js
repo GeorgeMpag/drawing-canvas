@@ -42,7 +42,7 @@ canvas.addEventListener('mousemove', (event)=>{
             drawCircle(x2,y2)
             drawLine(mouseX,mouseY,x2,y2)
         }else{
-            for (let i=0; i<3;i++){
+            for (let i=0; i<2;i++){
                 const root= new Root(mouseX, mouseY)    
                 root.update()
             }
@@ -65,7 +65,7 @@ class Root{
         this.size=Math.random()*.1+2
         this.angleX=Math.random()*6.2
         this.angleY=Math.random()*6.2
-        this.sizeIcreaser=Math.random()*.2+.2
+        this.sizeIcreaser=Math.random()*.4+.1
         this.angleXIcreaser=Math.random()*.2-.2
         this.angleYIcreaser=Math.random()*.2-.2
     }
@@ -81,15 +81,49 @@ class Root{
             if (this.size<this.maxSize){
                 ctx.beginPath()
                 ctx.arc(this.x,this.y, this.size,0,Math.PI*2)
-                ctx.fillStyle="lightgreen"
+                ctx.fillStyle="green"
+                ctx.strokeStyle="black"
                 ctx.fill()
                 ctx.stroke()
                 requestAnimationFrame(this.update.bind(this))
+            }else{
+                const flower=new Flower(this.x,this.y, this.size)
+                flower.flowerGrow()
             }
+
         
     }
 }
 
+
+//------------Flowers---------------------------
+
+class Flower{
+    constructor(x,y,size){
+        this.x=x
+        this.y=y
+        this.size=size
+        this.maxSize=this.size+Math.random()*50
+        this.image=new Image();
+        this.image.src="flowers.png"
+        this.sw=106
+        this.sh=90
+        this.frameX=Math.floor(Math.random()*3)
+        this.frameY=Math.floor(Math.random()*3)
+        console.log(this.size)
+        this.size>10? this.willFlower=true : this.willFlower=false
+    }
+
+    flowerGrow(){
+        if (this.size<this.maxSize && this.willFlower){
+            this.size+=.3
+            ctx.drawImage(this.image,this.sw*this.frameX,this.sh*this.frameY,this.sw,this.sh,this.x-this.size/2,this.y-this.size/2, this.size,this.size)    
+            requestAnimationFrame(this.flowerGrow.bind(this))
+        }
+            
+    }
+    
+}
 
 function drawCircle(x,y){
 
